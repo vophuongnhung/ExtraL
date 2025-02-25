@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExtraL</title>
+	<link rel="icon" type="image/png" href="https://i.pinimg.com/736x/1d/f3/fd/1df3fd2e5d4f5187ba7019a0d3bb5503.jpg">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Anton&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+             font-family: times, "Times New Roman", Tahoma, sans-serif; 
+            background-color: #f4f4f4;
+            line-height: 1.6;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+
+        .register-btn {
+            background: red;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-left: 20px;
+        }
+
+        /* Banner Styles */
+        .banner {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            background: url('https://phuotvivu.com/blog/wp-content/uploads/2021/06/qu%E1%BA%A3ng-b%C3%ACnh1.jpg') no-repeat center center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .banner::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .banner-text {
+            font-family: 'Dancing Script', cursive;
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            animation: fadeInUp 1s ease-out forwards;
+        }
+
+        .banner-text h2 {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .banner-text h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 60px;
+            font-weight: 700;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Introduction Section */
+         .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+        }
+        .text-content {
+            width: 55%;
+        }
+        .text-content h1 {
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .text-content p {
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        .image {
+            width: 40%;
+        }
+        .image img {
+            width: 100%;
+            border-radius: 10px;
+        }
+        .tabs {
+            display: flex;
+            margin-top: 10px;
+        }
+        .tab {
+            background-color: #00796b;
+            color: white;
+            padding: 10px 15px;
+            margin-right: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .tab:hover {
+            background-color: #004d40;
+        }
+        .cont {
+            display: none;
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        input[type="radio"] {
+            display: none;
+        }
+
+        #tab1:checked ~ .content #t1-content,
+        #tab2:checked ~ .content #t2-content,
+        #tab3:checked ~ .content #t3-content {
+            display: block;
+        }
+
+        #tab1:checked ~ .tabs label[for="tab1"],
+        #tab2:checked ~ .tabs label[for="tab2"],
+        #tab3:checked ~ .tabs label[for="tab3"] {
+            color: red;
+            font-weight: bold;
+        }
+
+        /* Gallery Section */
+        .gallery-container {
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .gallery {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            overflow-x: auto;
+            padding: 10px;
+        }
+
+        .image-box {
+            position: relative;
+            width: 250px;
+            height: 300px;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .image-box:hover img {
+            transform: scale(1.1);
+        }
+
+        .image-box .content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 10px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .image-box:hover .content {
+            opacity: 1;
+        }
+
+        .eco-tour-options, .culture-tour-options, .food-options, .ethnic-options {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-top: 5px;
+        }
+
+        .eco-tour-options label, .culture-tour-options label, .food-options label, .ethnic-options label {
+            background: #007bff;
+            padding: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .eco-tour-options label:hover, .culture-tour-options label:hover, .food-options label:hover, .ethnic-options label:hover {
+            background: #0056b3;
+        }
+
+        /* Deals Section */
+        .deals-container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 20px;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .card {
+            width: 250px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+            background-color: white;
+        }
+
+        .card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 10px;
+        }
+
+        .location, .info {
+            font-size: 14px;
+            color: gray;
+        }
+
+        .price {
+            color: orange;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .old-price {
+            text-decoration: line-through;
+            color: gray;
+            font-size: 14px;
+        }
+
+        .button {
+            display: block;
+            text-align: center;
+            background-color: blue;
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        .deal {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: orange;
+            color: white;
+            padding: 5px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* CSS cho phần biểu mẫu liên hệ */
+        .hero {
+            background: url('https://vietnambooking.com/wp-content/uploads/2023/02/dao-quang-binh-6.jpg') no-repeat center center/cover;
+            height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            position: relative;
+        }
+
+        .hero .overlay {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .contact-section {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .contact-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+
+        .contact-btn:hover {
+            background-color: #45a049;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .info-box {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 10px;
+            width: 250px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-box img {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 10px;
+        }
+
+        .experience {
+            margin-top: 50px;
+            padding: 20px;
+            background-color: white;
+            text-align: center;
+        }
+
+        .experience-btn {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+
+        .experience-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 50%;
+            margin: 20px auto;
+        }
+
+        .contact-form input, .contact-form textarea {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            width: 100%;
+        }
+
+        .contact-form textarea {
+            height: 100px;
+            resize: none;
+        }
+
+        .contact-form button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+
+        .contact-form button:hover {
+            background-color: #218838;
+        }
+
+        /* Popup Styles */
+        .popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .popup-content {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            font-family: Times, "Times New Roman", Tahoma, sans-serif;
+            font-size: 20px;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 25px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #333;
+        }
+
+        .popup-content h2 {
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        .popup-content h3 {
+            color: #2E7D32;
+            margin-top: 20px;
+        }
+
+        .popup-content img {
+            display: block;
+            margin: 10px auto;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .popup-content p {
+            margin: 10px 0;
+        }
+
+        .highlight-green {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .highlight-price, .highlight-blue {
+            color: #dc3545;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .title-blue {
+            color: #007bff;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* Checkbox để điều khiển popup */
+        #popup-eco-checkbox, #popup-culture-checkbox, #popup-food-checkbox, #popup-ethnic-checkbox {
+            display: none;
+        }
+
+        #popup-eco-checkbox:checked ~ #popup-eco,
+        #popup-culture-checkbox:checked ~ #popup-culture,
+        #popup-food-checkbox:checked ~ #popup-food,
+        #popup-ethnic-checkbox:checked ~ #popup-ethnic {
+            display: flex;
+        }
+		/* Sidebar chính */
+        .sidebar {
+            position: fixed;
+            left: -250px; /* Ẩn sidebar lúc đầu */
+            top: 0;
+            width: 250px;
+            height: 100%;
+            background: #242526;
+            color: white;
+            padding-top: 20px;
+            transition: left 0.3s ease-in-out;
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Dấu 3 gạch */
+        .hamburger {
+            position: fixed;
+            left: 20px; /* Vị trí của dấu 3 gạch */
+            top: 20px;
+            font-size: 30px;
+            color: #242526;
+            cursor: pointer;
+            z-index: 999;
+        }
+
+        /* Khi sidebar mở */
+        .sidebar.open {
+            left: 0;
+        }
+
+        /* Các link trong sidebar */
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+            transition: 0.2s;
+        }
+
+        .sidebar a:hover {
+            background: #3a3b3c;
+        }
+
+        .sidebar i {
+            width: 24px;
+            margin-right: 12px;
+        }
+
+        /* Phần thông tin người dùng */
+        .sidebar .user {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .sidebar .user img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+
+        /* Vùng nhận diện hover cho sidebar */
+        .sidebar-container {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 50px; /* Đã tăng diện tích nhận diện để dễ thao tác hơn */
+            height: 100%;
+            background: transparent;
+            z-index: 1000; /* Đảm bảo nó ở trên cùng */
+        }
+
+        .sidebar-container:hover .sidebar {
+            left: 0; /* Sidebar sẽ trượt ra khi hover vào container */
+        }
+
+        /* Danh sách thành viên */
+        .members-list {
+            display: none;
+            padding: 10px;
+            margin-top: 0.1px;
+        }
+
+        .members-list button {
+            font-family: times, "Times New Roman", Tahoma, sans-serif;
+            width: 100%;
+            padding: 10px;
+            text-align: left;
+            background-color: #3a3b3c;
+            border: none;
+            color: white;
+            font-size: 14px;
+            margin: 5px 0;
+            cursor: pointer;
+        }
+
+        .members-list button:hover {
+            background-color: #4a4a4a;
+        }
+
+        /* Thông tin thành viên */
+        .member-info {
+            background-color: #3a3b3c;
+            color: white;
+            padding: 2px 5px;
+            margin-top: 2px;
+            border-radius: 5px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+			text-align:center;
+			font-size: 10px; /* Giảm kích thước chữ */
+             width: 120px; 
+			 display: flex, justify-content: center và align-items: center.
+         }
+
+        /* Liên kết Liên hệ */
+        .member-info a {
+		    text-align:center;
+            color: #4CAF50;
+   
+            font-weight: bold;
+        }
+
+        .member-info a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <a href="#">Trang chủ</a>
+        <a href="#">Giới thiệu</a>
+        <a href="#">Dịch vụ du lịch</a>
+        <a href="#">Điểm du lịch</a>
+        <button class="register-btn">Đăng kí ngay</button>
+    </div>
+
+    <!-- Banner -->
+    <div class="banner">
+        <div class="banner-text">
+            <h2><big>Welcome to</big></h2>
+            <h1>QUẢNG BÌNH</h1>
+        </div>
+    </div>
+
+    <!-- Introduction -->
+	<div class="container">
+        <div class="text-content">
+            <h1>Giới thiệu chung</h1>
+            <p>Quảng Bình là một tỉnh ven biển thuộc Bắc Trung Bộ, Việt Nam, nổi tiếng với Vườn quốc gia Phong Nha - Kẻ Bàng, di sản thiên nhiên thế giới. Tỉnh có địa hình đa dạng với biển, rừng, và hệ thống hang động kỳ vĩ, đặc biệt là Hang Sơn Đoòng, lớn nhất thế giới. Ngoài cảnh quan thiên nhiên, Quảng Bình còn có bề dày lịch sử và văn hóa đặc sắc, thu hút du khách với các di tích, bãi biển đẹp và ẩm thực độc đáo.</p>
+            <div class="tabs">
+                <div class="tab" onclick="showContent('t1')">Vị trí địa lý</div>
+                <div class="tab" onclick="showContent('t2')">Dân số và hành chính</div>
+                <div class="tab" onclick="showContent('t3')">Kinh tế - Xã hội</div>
+            </div>
+            <div class="cont" id="t1">
+  <ul>
+                    <li>Quảng Bình nằm ở miền Trung Việt Nam, giáp Hà Tĩnh ở phía Bắc, Quảng Trị ở phía Nam, Lào ở phía Tây và Biển Đông ở phía Đông.</li>
+                    <li>Tỉnh có diện tích khoảng <b>8.000 km²</b>, địa hình đa dạng gồm núi, rừng, đồng bằng và biển.</li>
+                </ul>
+            </div>
+            <div class="cont" id="t2">
+ <ul>
+                    <li>Dân số khoảng <b>900.000 người</b> (2023).</li>
+                    <li>Gồm 1 thành phố (<b>Đồng Hới</b> - trung tâm kinh tế, hành chính), 1 thị xã (<b>Ba Đồn</b>) và 6 huyện (<b>Tuyên Hóa, Minh Hóa, Quảng Trạch, Bố Trạch, Lệ Thủy, Quảng Ninh</b>).</li>
+                </ul>
+            </div>
+            <div class="cont" id="t3">
+<ul>
+                    <li>Quảng Bình phát triển các ngành <b>du lịch, nông nghiệp, thủy sản và công nghiệp</b>.</li>
+                    <li><b>Giao thông</b>: Có quốc lộ 1A, đường Hồ Chí Minh, đường sắt Bắc - Nam, sân bay Đồng Hới.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="image">
+            <img src="https://dukhach.quangbinh.gov.vn/o/3cmsnew-portlet/ViewImage?imagename=Bo%20ke%20song%20nhat%20le_1468482936123.jpg" alt="Quảng Bình">
+        </div>
+    </div>
+    <script>
+        function showContent(id) {
+            document.querySelectorAll('.cont').forEach(div => div.style.display = 'none');
+            document.getElementById(id).style.display = 'block';
+        }
+    </script>
+    <!-- Gallery -->
+    <div class="gallery-container">
+        <h1>DU LỊCH KHÁM PHÁ</h1>
+        <p>Trải nghiệm du lịch chân thực, tiện lợi và đầy cảm hứng.</p>
+        <div class="gallery">
+            <div class="image-box">
+                <img src="https://mia.vn/media/uploads/blog-du-lich/top-nhung-hang-dong-quang-binh-ban-khong-nen-bo-lo-4-1653583501.jpg" alt="Du lịch sinh thái">
+                <div class="content">
+                    <h3>DU LỊCH SINH THÁI</h3>
+                    <p>Khám phá vẻ đẹp thiên nhiên Quảng Bình với hang động và rừng nguyên sinh.</p>
+                    <div class="eco-tour-options">
+                        <label for="popup-eco-checkbox">Xem chi tiết</label>
+                    </div>
+                </div>
+            </div>
+            <div class="image-box">
+                <img src="https://media.vietnamplus.vn/images/7255a701687d11cb8c6bbc58a6c80785fee2ec93ba9046743933e78a8d90fb37bc6c22e18869c17b30e23ffff1442c0b36be7d1871dd6a8121cb6270552a37c6/dua_boi_le_thuy_1.jpg" alt="Du lịch văn hóa">
+                <div class="content">
+                    <h3>DU LỊCH VĂN HÓA</h3>
+                    <p>Hành trình tìm hiểu các di tích lịch sử và văn hóa địa phương.</p>
+                    <div class="culture-tour-options">
+                        <label for="popup-culture-checkbox">Xem chi tiết</label>
+                    </div>
+                </div>
+            </div>
+            <div class="image-box">
+                <img src="https://quangbinhtourism.vn/wp-content/uploads/2024/02/ban-rum-ho-10-1024x683.jpg" alt="Dân tộc miền núi">
+                <div class="content">
+                    <h3>DÂN TỘC MIỀN NÚI</h3>
+                    <p>Trải nghiệm nét đẹp văn hóa của các dân tộc sinh sống tại Quảng Bình.</p>
+                    <div class="ethnic-options">
+                        <label for="popup-ethnic-checkbox">Xem chi tiết</label>
+                    </div>
+                </div>
+            </div>
+            <div class="image-box">
+                <img src="https://changchangfamily.com/wp-content/uploads/2023/03/ganuong__637457219481667841.jpg" alt="Ẩm thực">
+                <div class="content">
+                    <h3>ẨM THỰC</h3>
+                    <p>Thưởng thức các món ăn đặc sản nổi tiếng của Quảng Bình.</p>
+                    <div class="food-options">
+                        <label for="popup-food-checkbox">Xem chi tiết</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popup for Du lịch sinh thái -->
+    <input type="checkbox" id="popup-eco-checkbox">
+    <div class="popup" id="popup-eco">
+        <div class="popup-content">
+            <label for="popup-eco-checkbox" class="close-btn">✖</label>
+            <h2>Du lịch sinh thái Quảng Bình</h2>
+
+            <h3>Suối Nước Moọc</h3><hr>
+            <p>Suối Nước Moọc thuộc phân khu dịch vụ – hành chính VQG Phong Nha – Kẻ Bàng, đây là nguồn nước trong xanh trồi lên từ chân núi và chảy về sông Chày. Phía thượng nguồn suối là 1 hố nước rộng 80 – 90 m2 có nhiều phiến đá lớn với những vân hoa đẹp nằm dưới những tán cây cao, phía hạ nguồn là vô số những ghềnh, bãi đá ngầm và thác nước có cảnh quan tuyệt đẹp, phù hợp cho việc tổ chức du lịch sinh thái hấp dẫn và diệu kỳ mà khi du khách đặt chân đến sẽ tạo thành một ấn tượng khó quên trước một khung cảnh thiên nhiên vô cùng kỳ thú.</p>
+            <img src="https://cms.junglebosstours.com/assets/a035a31b-450c-4f5b-aa91-dabcd654c610?width=1920&height=1080" alt="Suối Nước Moọc">
+            <h2 class="title-blue">1. Chương trình tour</h2>
+            <p>Từ khu du lịch Phong Nha, dọc đường Hồ Chí Minh (nhánh Đông) theo hướng Bắc đến ngã 3 Khe Gát rẽ về hướng Tây đường Hồ Chí Minh (nhánh Tây) khoảng 10 km là đến điểm du lịch sinh thái Suối Nước Moọc. Du khách cũng có thể theo thuyền ngược dòng Son, rẽ về dòng sông Chày hơn 6km cũng đến được điểm du lịch này.</p>
+            <img src="https://cms.junglebosstours.com/assets/5ee7fbef-df39-4289-9ef1-14f1635b4f1e?width=1726&height=972" alt="Thuyền trên suối">
+            <p>Tham quan điểm du lịch này không yêu cầu du khách phải đặt trước, vé được bán ra mỗi ngày tại quầy đón khách. Sau khi mua vé, hướng dẫn viên sẽ đưa du khách đến những điểm nghỉ chân bên bờ suối, tản mạn trên các cây cầu gỗ để chiêm ngưỡng vẻ đẹp nên thơ, khung cảnh sơn thuỷ hữu tình, không khí trong lành của Suối Nước Moọc. Đến với Suối Nước Moọc, đập vào trước mắt du khách sẽ là cả một không gian núi rừng xanh biếc và hồ nước trong xanh. Thay vì bách bộ, bạn có thể chèo thuyền thong dong ngắm cảnh. Ngồi trên thuyền, bạn có thể nhìn ngắm cảnh quan núi non bao la hùng vĩ, những con đường, những chiếc cầu tre nhỏ xinh nối liền hai bên bờ suối cũng góp phần không nhỏ làm nên khung cảnh đầy thơ mộng cho nơi này. Cảm giác tuyệt nhất khi đi trên thuyền chính là nhìn ngắm vẻ đẹp các loài cá ở dưới suối hay màn trình diễn của những đàn bướm đủ sắc màu lượn lờ trên đá.</p>
+            <p><span class="highlight-green">Đặc biệt</span>, du khách có thể dừng chân bên bờ suối và thưởng thức những món ăn dân dã như thịt nướng, cá nướng, cơm nắm, … đậm đà hương vị quê hương Quảng Bình. Sau khi dùng cơm, nghỉ ngơi xong, du khách có thể thoải mái tham gia các trò chơi, bơi lội, tắm suối, nhảy cầu mạo hiểm, …. Đùa nghịch và ngâm mình vào dòng suối trong vắt, mát lạnh, bạn cảm thấy như lòng mình bỗng thanh thản khó tả. Khi được làm bạn và hòa mình vào thiên nhiên luôn là một cảm giác khó quên nhất.</p>
+            <img src="https://cms.junglebosstours.com/assets/31fb6728-75ad-4da3-a350-68dcb05cb61f?width=1365&height=1368" alt="Trò chơi tại Suối Nước Moọc">
+            <p>Có thể nói, Suối Nước Moọc là sự lựa chọn đúng đắn, là cơ hội để nghỉ ngơi, thư giãn của du khách gần xa khi đến với Quảng Bình.</p>
+            <p><b>Lộ trình:</b> Mua vé – Bến thuyền – <span class="highlight-green">Tham quan suối Nước Moọc – Ăn uống, nghỉ ngơi ở nhà hàng suối nước Moọc – Chơi các trò chơi như: tắm suối và bơi lội, nhảy cầu mạo hiểm, …</span> Kết thúc chuyến tham quan.</p>
+            <h2 class="title-blue">2. Tour trọn gói tham quan Điểm du lịch Suối nước Moọc</h2>
+            <ul>
+                <li>Người lớn: <strong class="highlight-price">180.000đ/lượt</strong></li>
+                <li>Trẻ em từ 1.1m đến 1.3m: <strong class="highlight-price">100.000đ/lượt</strong></li>
+                <li><strong class="highlight-price">Các dịch vụ được cung cấp miễn phí:</strong> Phao cứu sinh; Thuyền Kayak; Vọng tam Đài chiêm ngưỡng “Thạch Tuyền Lan Viên”; Các trò chơi cảm giác mạnh, các thiết bị nổi tại các bãi tắm; Bảo hiểm tour.</li>
+            </ul>
+            <h2 class="title-blue">3. Phí tham quan: Từ 1,3m trở lên: 80.000đ/lượt</h2>
+
+            <h3>Động Phong Nha - Kỳ quan đệ nhất động</h3><hr>
+            <p>Động Phong Nha, "Kỳ quan đệ nhất động", có hệ thống hang động kỳ vĩ với 14 buồng hang và sông ngầm dài 1500m.</p>
+            <img src="https://nld.mediacdn.vn/291774122806476800/2024/11/18/dong-phong-nha-ke-bang-dep-den-choang-ngop-17319168370561406931222.jpg" alt="Phong Nha Kẻ Bàng">
+            <h2 class="title-blue">Chương trình tour</h2>
+            <p>Phòng vé của Trung tâm Du lịch mở cửa bán vé lúc <span class="highlight-green">7:45</span> và kết thúc lúc <span class="highlight-green">16:00</span>. Sau khi mua vé, hướng dẫn viên đưa du khách lên thuyền ngược dòng sông Son thơ mộng khoảng 4km là đến cửa động. Sau một lúc thư thả ngoạn cảnh non nước hữu tình, cửa động Phong Nha dần hiện ra trước mắt, hình dáng như một cái bát úp trên mặt nước tĩnh lặng. Trông xa tưởng nhỏ, nhưng khi đến gần, cửa động mở rộng đến 20m, cao 10m. Khi đến cửa động thuyền tắt máy, chèo tay đưa du khách vào sâu trong lòng động. Càng đi sâu vào bên trong, cảm giác oi nồng của mùa hè nơi miền Trung gió Lào lập tức biến mất, ánh sáng lúc này càng nhạt dần rồi mất hẳn, một thế giới u linh, kỳ thú…. hiện ra. Ở đây, du khách sẽ bắt đầu chuyến tham quan hang động với 7 tiêu chí do Hiệp hội hang động Hoàng gia Anh bình chọn. Phần chính của động Phong Nha gồm 14 buồng hang, nối liền bởi một hành lang nước dài đến 1500m. Các hang phía ngoài có trần cao hơn mặt nước khoảng 10m. Từ hang thứ 4 trở đi, trần hang vươn cao từ 25-50m. Ngoài ra, sau hang thứ 14, còn có các hành lang khác đi sâu hơn nữa để đến những hang to lớn hơn nhưng có phần rủi ro do quá trình phong hóa đá vôi vẫn tiếp diễn, nên hành trình tham quan thường chỉ đến hang thứ 14 rồi chuyển hướng. Và khi đến hang Bi Ký thuyền sẽ dừng lại cho du khách xuống tham quan động Phong Nha cận cảnh với những nhũ đá từ trên rủ xuống, măng đá từ dưới nhô lên tua tủa như cây rừng, những hành lang phủ đầy thạch nhũ với những hình thù độc đáo cho du khách tha hồ mặc sức tưởng tượng.</p>
+            <img src="https://phongnhakebang.vn/wp-content/uploads/2023/11/a-cave-with-water-and-lights-description-automati.jpeg" alt="Hang Bi Ký">
+            <p>Rời hang Bi Ký, thuyền đi tiếp đến hang Tiên và hang Cung Đình. Du khách sẽ có cảm giác đang lạc vào chốn cung điện nguy nga, với đủ kiểu nhũ đá mang dáng vẻ diệu kỳ như một sự phô diễn nghệ thuật đa chiều của tạo hóa.</p>
+            <img src="https://phongnhakebang.vn/wp-content/uploads/2023/11/a-cave-with-a-body-of-water-description-automatic-1.jpeg" alt="Hang Cung Đình">
+            <p><span class="highlight-green">Đặc biệt</span>, nơi đây du khách còn có thể nhìn thấy những <span class="highlight-green">dấu tích cổ</span> của người Chămpa, được thể hiện bằng các ký tự được để lại trên vách đá. Vì vậy chinh phục động Phong Nha sẽ không có gì quá bất ngờ khi bạn bị vẻ đẹp của hang động chinh phục hoàn toàn. Sau khi chứng kiến sự bất ngờ này đến bất ngờ khác trước vẻ đẹp của động Phong Nha, du khách sẽ trở lại thuyền và kết thúc chuyến tham quan.</p>
+            <h2 class="title-blue">Lộ trình:</h2>
+            <p>Mua vé – Bến thuyền – Cửa động Phong Nha – <span class="highlight-green">Khám phá hang Bi Ký</span> – <span class="highlight-green">Khám phá hang Tiên</span> – <span class="highlight-green">Khám phá Hang Cung Đình</span> – Trở lại thuyền, kết thúc chuyến tham quan.</p>
+            <h2 class="title-blue">Giá tour:</h2>
+            <ul>
+                <li>Từ 1,3 m trở lên: <strong class="highlight-price">150.000đ/người/lượt</strong></li>
+                <li>Dưới 1,3m: <strong>Miễn phí tham quan</strong></li>
+                <li>Thuyền vận chuyển: <strong class="highlight-price">550.000đ/chuyến</strong> (Tối đa 12 người, kể cả trẻ em)</li>
+                <li>Dịch vụ Hướng dẫn viên: 
+                    <ul>
+                        <li>Tiếng Việt: <strong class="highlight-price">200.000đ</strong></li>
+                        <li>Tiếng Anh: <strong class="highlight-price">300.000đ</strong></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3>Động Thiên Đường</h3><hr>
+            <p>Động Thiên Đường nằm trong phân khu Phục hồi sinh thái của Vườn Quốc gia Phong Nha – Kẻ Bàng. Năm 2005, trong lần thám hiểm khu vực Vườn Quốc gia Phong Nha – Kẻ Bàng, các chuyên gia của Hiệp hội Hang động Hoàng gia Anh đã khám phá ra một hang động mới vô cùng rộng lớn. Với vẻ đẹp tuyệt mỹ, tráng lệ của hang động khiến cho các thành viên của đoàn không nén nổi cảm xúc đã phải thốt lên hai tiếng “Thiên đường”. Từ đó, “Thiên Đường” đã trở thành tên gọi và được biết đến như một trong những hang động đẹp và kỳ vĩ vào bậc nhất của Thế giới.</p>
+            <img src="https://statics.vinpearl.com/dong-thien-duong-3334_1627990501.jpg" alt="Động Thiên Đường">
+            <p>Với chiều dài lên tới 31,4 km, chiều cao là 60m, chiều rộng dao động từ 30m đến 100m, có nơi lên đến 150m. Theo nhận định của đoàn thám sát thì đây là hang động khô dài nhất Châu Á, đặc biệt là hệ thống măng đá, nhũ đá ở đây có vẻ đẹp lung linh, huyền ảo, ngoài sức tưởng tượng của con người. Ngày 11/6/2011, Trung Tâm Sách Kỷ Lục Việt Nam đã công bố các kỷ lục mà Động Thiên Đường đạt được:</p>
+            <p>– Động khô dài nhất Châu Á</p>
+            <p>– Động khô có hệ thống thạch nhũ, măng đá độc đáo nhất</p>
+            <p>– Động có cầu gỗ dài nhất Châu Á</p>
+            <p>Có thể nói, Động Thiên Đường là một tác phẩm của tạo hóa, một thiên cung trong lòng đất, trong lòng Di sản thiên nhiên thế giới Phong Nha – Kẻ Bàng.</p>
+            <img src="https://statics.vinpearl.com/dong-thien-duong-quang-binh-1_1627988858.jpg" alt="Thạch nhũ trong Động Thiên Đường">
+            <h2 class="title-blue">Các sản phẩm du lịch:</h2>
+            <h4>* Tham quan 1km Động Thiên Đường trên hệ thống cầu thang gỗ</h4>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTNvs-h6dhnxBTauowmsJh_OVppbHCZUmcOw&s" alt="Cầu thang gỗ">
+            <p>Sau khi mua vé qua cổng, du khách có thể đi bộ hoặc đi xe điện di chuyển dưới tán cây rừng nguyên sinh với quãng đường 1,6km, trekking 500m từ chân núi đến cửa động, sau đó dạo bộ trong động trên hệ thống cầu thang gỗ 1km, nhìn ngắm các khối thạch nhũ đẹp mê hồn với những hình thù khác nhau. Lòng động được chia thành nhiều khoang lớn, có nơi rộng lên đến 150m, chiều cao lên đến 100m, nên du khách sẽ cảm nhận sự hùng vĩ và tráng lệ khi đặt chân đến đây, cùng với hệ thống thạch nhũ đẹp và độc đáo, Động Thiên Đường đã được ví như là một “Thiên cung trong lòng đất”.</p>
+            <h4>* Giá vé tham quan:</h4>
+            <ul>
+                <li>Người lớn: <strong class="highlight-price">250.000đ/vé</strong></li>
+                <li>Trẻ em từ 1.1m đến 1.3m: <strong class="highlight-price">125.000đ/vé</strong></li>
+                <li>Trẻ em dưới 1.1m: <strong class="highlight-price">miễn phí</strong></li>
+            </ul>
+            <h4>* Trải nghiệm, chinh phục 7km Động Thiên Đường, Giếng Trời:</h4>
+            <img src="https://statics.vinpearl.com/dong-thien-duong-quang-binh-12_1627989192.jpg" alt="Giếng Trời">
+            <p>Đây là tour thích hợp cho những ai yêu thiên nhiên, thích tìm tòi khám phá những điều mới lạ. Trải nghiệm những hành trình mạo hiểm để tận mắt thưởng ngoạn vẻ đẹp kỳ bí của những khối thạch nhũ, măng đá đang sống và trưởng thành trong lòng hang, chèo thuyền vượt qua con suối ngầm dài từ 60-100m, lội qua những khe suối mát lạnh để đến với Giếng Trời – một kỳ quan thiên nhiên luôn tràn đầy những tia nắng huyền ảo đang chờ đón bạn.</p>
+            <p>Tour khám phá chiều sâu 7km Động Thiên Đường trong lòng động với hai lộ trình thích hợp để bạn lựa chọn:</p>
+            <p>– Lộ trình tour trong ngày</p>
+            <p>– Lộ trình tour 02 ngày 01 đêm</p>
+
+            <h3>Hang Sơn Đoòng - Hang động tự nhiên lớn nhất thế giới</h3><hr>
+            <p>Sơn Đoòng là hang động lớn nhất hành tinh và cũng là hang động hùng vĩ nhất tại Việt Nam. Hang Sơn Đoòng được Hồ Khanh - một thợ rừng người Phong Nha, Quảng Bình phát hiện ra cửa hang vào năm 1990 và đến năm 2009 thì được nhóm thám hiểm hang động Anh-Việt (The British Vietnam Caving Expedition Team) do ông Howard Limbert dẫn đầu vào thám hiểm, khảo sát và đo vẽ. Hang Sơn Đoòng được nhóm thám hiểm cùng với tạp chí <span class="highlight-green">National Geographic công bố là hang động đá vôi tự nhiên lớn nhất thế giới</span> năm 2009. Năm 2013, Hang Sơn Đoòng được tổ chức kỷ lục thế giới <span class="highlight-green">Guinness</span> ghi nhận là hang động tự nhiên lớn nhất thế giới.</p>
+            <img src="https://oxalisadventure.com/uploads/2022/12/8-696x464__638073786602311886.jpg" alt="Hang Sơn Đoòng">
+            <h2 class="title-blue">Nguồn gốc tên Hang Sơn Đoòng</h2>
+            <p>Theo truyền thống của các nhà thám hiểm hang động thì người phát hiện hang sẽ được quyền đặt tên cho hang động mình tìm ra. Sau cuộc thám hiểm kết thúc vào tháng 4/2009 thì ông Hồ Khanh được đề nghị đặt tên cho hang, nhiều người gợi ý rằng nên lấy tên Hồ Khanh để đặt cho hang động khổng lồ này để ghi danh người phát hiện ra nó. Tuy nhiên, Hồ Khanh cùng các thành viên đoàn thám hiểm bàn bạc và đặt tên hang là Hang Sơn Đoòng (Là kết hợp của 2 từ: <span class="highlight-green">Sơn là núi, Đoòng là tên của thung lũng nơi có suối Rào Thương chảy qua</span>, hay còn có ý nghĩa là hang trong núi (đá vôi), và có sông ngầm chảy qua).</p>
+            <h2 class="title-blue">Những điểm độc đáo của Hang Sơn Đoòng</h2>
+            <p>Hang Sơn Đoòng có tổng chiều dài <span class="highlight-green">gần 9km</span>, vòm hang rộng lớn, với thể tích lên đến <span class="highlight-green">38.5 triệu m³</span> đã khiến cho hang động này trở thành hang động tự nhiên <span class="highlight-green">lớn nhất hành tinh.</span> Thể tích Hang Sơn Đoòng lớn hơn 5 lần so với Hang Deer ở Malaysia được cho là hang động tự nhiên lớn nhất thế giới (trước thời điểm Hang Sơn Đoòng được phát hiện) với thể tích là 9.5 triệu m³. Tuy nhiên điều khiến cho Sơn Đoòng trở nên đặc biệt và được thế giới chú ý là từ thế giới độc đáo bên trong bên trong hang: <span class="highlight-green">chứa nhiều thạch nhũ</span> với kích thước khổng lồ (cao hơn 80m), chứa cả <span class="highlight-green">rừng cây nguyên sinh</span> đang phát triển ở trong lòng hang, chứa <span class="highlight-green">hệ sinh thái,</span> mà chưa 1 nhà thám hiểm nào khám phá hết.</p>
+            <p>Nhiều du khách khi bước vào hang thì cho rằng Hang Sơn Đoòng giống như một thế giới khác, còn MC Ginger Zee của chương trình Good Morning America của đài ABC News đã thốt lên rằng cảnh sắc trong hang giống như trong phim Avatar. Dưới đây là những điểm nổi bật bên cạnh rất nhiều điều độc đáo chỉ có bên trong Hang Sơn Đoòng.</p>
+            <h2 class="title-blue">Các địa điểm nổi bật bên trong Hang Sơn Đoòng</h2>
+            <p><b>Nhánh hang Hope and Vision:</b> Đây là khoang có lòng hang rộng nhất của Sơn Đoòng, từ vị trí bắt đầu của hành lang Hand of Dog thì bạn có thể nhìn thấy ánh sáng từ hố sụt 1 với khoảng cách là 1,5km. Ở đây các chuyên gia hang động có ước tính có thể chứa được 1 toà nhà chọc trời hơn 40 tầng, khoang hang có thể đủ lớn cho một chiếc máy bay Boeing 747 bay qua. Khu vực này cũng là nơi có cột thạch nhũ cao nhất thế giới với chiều cao là hơn 80m.</p>
+            <img src="https://oxalisadventure.com/uploads/2024/05/hangofdog-1500__638515114029273098.jpg" alt="Hope and Vision">
+            <p><b>Dòng sông ngầm (Underground river):</b> Bên trong hang động lớn nhất thế giới có dòng sông ngầm chảy từ Hang Én và Hang Khe Ry (hang có nguồn nước từ Lào). Từ cửa hang, trước khi tiến vào khu vực Hand of Dog thì phải băng qua 2 lần suối ở độ sâu chừng ngang đầu gối. Khi mực nước dâng cao hơn thì có lối đi ở trên cao bằng thang. Khi con suối chảy vào trong hang thì tạo và nhiều thác nước độ cao từ 5-10m, các thác nước tạo ra tiếng vang cả vòm hang đồng thời tạo ra nhiều hơi nước và những đám sương mù thỉnh thoảng phủ kín cả vòm hang. Dòng sông ngầm này biến mất ở gần hố sụt 1 và cách cửa hang chừng 4,5km.</p>
+            <img src="https://oxalisadventure.com/uploads/2022/12/3-696x464__638073786538336049.jpg" alt="Dòng sông ngầm">
+            <p><b>Hành lang hóa thạch (Fossil passage):</b> Nằm ngay sát bên dòng sông ngầm ở độ sâu 40m bên dưới khu cắm trại Hố Sụt 1. Hành lang hoá thạch là nơi những tảng đá vôi còn in dấu những con ốc, sò, bộ xương cá, các loại san hô đã hoá thạch từ nhiều trăm triệu năm về trước. Đây cũng là khu vực có hồ nước ngầm có nhiệt độ ở khoảng từ 16 đến 17 độ C, nơi du khách có thể mặc áo phao và dùng đèn đội đầu để bơi lội và thư giãn sau một ngày trekking vất vả từ Hang Én. Hầu hết du khách đều cho rằng bơi ở hồ nước ngầm có nhiệt độ 16 -18 độ C là một trong những trải nghiệm không thể bỏ qua khi thám hiểm hang động lớn nhất thế giới.</p>
+            <img src="https://oxalisadventure.com/uploads/2022/08/hanhlanghoathach__637968442931993937.jpg" alt="Hành lang hóa thạch">
+            <p><b>Hố Sụt 1: Vọng Khủng Long:</b> Đây là khu vực có vòm hang bị sập xuống tạo thành một khu vực giếng trời thông ra bên ngoài. Với độ cao ở điểm thấp nhất là 450m tính từ miệng hố sụt xuống đáy hang. Đây cũng là vị trí mà dòng sông ngầm biến mất. Vào những ngày nắng, khu vực hố sụt đón một lượng tia nắng chiếu vào bên trong hang từ khoảng 11 giờ sáng đến gần 13 giờ chiều, đặc biệt từ tháng 1 đến tháng 3 hàng năm thì tia nắng chiếu sâu vào bên trong lòng hang làm sáng rực cả vòm hang rộng lớn. Tia nắng cùng với làn sương mù được tạo ra từ thác nước tạo nên cảnh tượng huyền ảo độc đáo mà không nơi nào có.</p>
+            <img src="https://oxalisadventure.com/uploads/2022/12/8-696x464__638073786602311886.jpg" alt="Hố Sụt 1">
+            <p><b>Hố Sụt 2 - Garden of Edam:</b> Hố sụt 2 nằm cách Hố Sụt 1 khoảng 1km, nơi có cánh rừng nguyên sinh nằm sâu 200m bên trong lòng hang và bên dưới các dãy núi đá vôi. Khi ra khỏi khu vực Hố Sụt 1 thì bạn sẽ thấy một dốc đất từ bên trong lòng hang tiến về phía khu rừng, đây là khu vực có ánh sáng từ hố sụt chiếu vào do đó có nhiều loài cây dương xỉ mọc dọc lối đi làm cho lối đi trông như con đường đi vào một khu vườn cổ tích. Khu rừng có nhiều cây cổ thụ cao vút, bạn phải đi bộ hơn 30 phút mới băng qua hết khu rừng này để vào khu vực cắm trại Hố Sụt 2.</p>
+            <img src="https://oxalisadventure.com/uploads/2020/02/hosut2_696x464__637169014522715029.jpg" alt="Hố Sụt 2">
+            <p><b>Bức tường Việt Nam - The Great Wall of Vietnam:</b> Tháng 4 năm 2009, sau gần 10 ngày khảo sát và đo vẽ thì đoàn thám hiểm bắt gặp một khối thạch nhũ lớn chặn hết tất cả lối đi, do sự hùng vĩ và độ cao dường như bất tận của khối thạch nhũ này, các chuyên gia thám hiểm đã không thể lường trước và các loại thiết bị mang theo không đủ để có thể chinh phục được. Tất cả các thành viên buộc phải quay lại lối cũ để quay về, ngay thời điểm họ quay ra khỏi hang thì những hình ảnh chụp được bên trong hang cùng với thông số đo được, đoàn thám hiểm cùng với tạp chí National Geographic công bố Sơn Đoòng là hang động tự nhiên lớn nhất thế giới. Tại thời điểm này chưa ai biết phía sau khối đá lớn đó là gì và bao xa, nhóm thám hiểm quyết định đặt tên cho khối đá là "The Great Wall of Vietnam" Bức Tường Việt Nam để thể hiện sự hùng vĩ của nó.</p>
+            <img src="https://oxalisadventure.com/uploads/2020/02/buctuongvietnam_696x464__637169032507399265.jpg" alt="Bức tường Việt Nam">
+            <h2 class="title-blue">Bản đồ 3D của Hang Sơn Đoòng và tên của các vị trí trong hang</h2>
+            <img src="https://oxalisadventure.com/uploads/2022/12/d0livxexcaupdtg__638072988658016293.jpg" alt="Bản đồ 3D">
+            <h2 class="title-blue">Những giá trị của Hang Sơn Đoòng mang lại</h2>
+            <p>Sơn Đoòng đã góp phần vào việc thúc đẩy phát triển du lịch hang động Quảng Bình, <span class="highlight-green">đưa Quảng Bình vào bản đồ du lịch thế giới,</span> được nhiều người biết đến và giúp người dân địa phương có công ăn việc làm ổn định, góp phần phát triển kinh tế tỉnh nhà. Từ hiệu ứng khai thác du lịch Hang Sơn Đoòng, nhiều dịch vụ du lịch được mở ra, hàng trăm gia đình xây dựng homestay để đón khách du lịch. Tour thám hiểm Sơn Đoòng đã tạo việc làm trực tiếp cho 125 người dân địa phương tại Phong Nha và hàng trăm việc làm gián tiếp cho người dân địa phương thông qua việc cung cấp dịch vụ cộng thêm, cung ứng thực phẩm và nhiều dịch vụ khác. Hoạt động du lịch tại Sơn Đoòng <span class="highlight-green">góp phần phát triển kinh tế địa phương Quảng Bình</span>.</p>
+            <p>Nhà làm phim từng đạt giải Emmy, Sid Perou đã đến Sơn Đoòng và Phong Nha và ông đã làm một bộ phim tài liệu dài 40 phút với tiêu đề: <span class="highlight-green">"Sơn Đoòng, hang động đã vực dậy một ngôi làng"</span>. Bộ phim đã gây tiếng vang lớn và thu hút rất nhiều du khách trên thế giới đến với Phong Nha, Quảng Bình. Phong Nha - Kẻ Bàng ngày nay là điểm đến hấp dẫn của du khách trong nước và quốc tế, cuộc sống của người dân địa phương dần được cải thiện, no ấm hơn.</p>
+        </div>
+    </div>
+
+    <!-- Popup for Du lịch văn hóa -->
+    <input type="checkbox" id="popup-culture-checkbox">
+    <div class="popup" id="popup-culture">
+        <div class="popup-content">
+            <label for="popup-culture-checkbox" class="close-btn">✖</label>
+            <h1 justify: center>Du lịch văn hóa Quảng Bình</h1>
+
+            <h2>Khám phá Lễ hội đua thuyền trên sông Kiến Giang</h2> <hr>
+			  	<img src="https://tttctt.1cdn.vn/2024/09/01/le-hoi-dua-thuyen.jpg" alt="s">
+				<p class="tour-info">Con sông Kiến Giang hiền hòa chảy qua địa bàn huyện Lệ Thủy, Quảng Bình, đây là một trong hai phụ lưu lớn của sông Nhật Lệ. Sông Kiến Giang có chiều dài 58km, khác với nhiều con sông lớn ở Việt Nam là chảy ra biển cả thì sông Kiến Giang chảy theo hướng Tây Bắc. Hàng năm vào dịp lễ mừng tết độc lập 2/9, người dân huyện Lệ Thủy lại háo hức chuẩn bị tham gia Lễ hội đua thuyền truyền thống trên sông Kiên Giang</p>
+				<h3>1. Nguồn gốc lễ hội đua thuyền trên sông Kiến Giang</h3>
+				<p class="tour-info">Có lẽ trong tâm khảm của mỗi người dân Lệ Thủy, ai cũng háo hức chờ đón sự kiện lớn đua thuyền truyền thống trên sông Kiến Giang trong ngày tết Độc Lập 2/9. Nhiều người lớn tuổi ở Lệ Thủy kể lại, Lễ hội đua thuyền ở sông Kiến Giang có từ cách đây hơn 500 năm, diễn ra vào mùa xuân, đây là lễ hội đua tài, vui chơi của người dân Lệ Thủy, nhằm mục đích cầu cho mưa thuận, gió hòa, mùa màng bội thu. Đây là lễ hội mang đậm bản sắc của người dân vùng sông nước, nhằm nhân lên sức mạnh của cộng đồng trong phát triển kinh tế và phòng chống thiên tai.</p>
+				<p class="tour-info">Dòng sông Kiến Giang cứ vào dịp hè là bị khô cạn, có những đoạn sông cạn đến mức người dân có thể đi bộ từ bờ bên này qua bên kia. Nhưng cứ đến tháng 8 nơi đây lại có những cơn mưa lớn kéo dài từ 2- 5 ngày giúp cho con sông đầy nước. Do đó người dân Lệ Thủy tổ chức đua thuyền để trai gái được trổ tài bơi lội, chèo thuyền, cầu mong một năm thuận lợi. Từ sau cách mạng tháng 8 thành công, người Lệ Thủy chọn ngày 2/9 tổ chức đua thuyền để vừa mừng tết Độc lập, vừa duy trì Lễ hội.</p>
+				<img src="https://quangbinh.travel/wp-content/uploads/2023/12/HT_01190.jpg" alt="d">
+				<h3>2. Ý nghĩa của Lễ hội đua thuyền ở Lệ Thủy</h3>
+				<p class="tour-info">Lễ hội đua thuyền truyền thống trên sông Kiến Giang ở Lệ Thủy được người dân duy trì nhằm cầu cho mưa thuận gió hòa, cầu bình an. Đây cũng là dịp để khơi dậy tinh thần đoàn kết, rèn luyện sức khỏe của người dân, khẳng định lòng quyết tâm của người Lệ Thủy trong mọi hoàn cảnh, nhất là trong thiên tai bão lũ. Ngày nay, khi đời sống của người dân nâng cao, du lịch Quảng Bình được quảng bá rộng rãi, đặc biệt Lệ Thủy là nơi sinh ra vị tướng tài ba Võ Nguyên Giáp, nên lễ hội đua thuyền trên sông Kiến Giang được tổ chức quy mô lớn, thu hút nhiều đội bơi tham gia, lịch thi bơi diễn ra từ những ngày cuối tháng 8 và vòng chung kết diễn ra vào ngày 2 tháng 9, lễ hội diễn ra sôi động, hấp dẫn và náo nhiệt, hàng ngàn lượt người dân là con em quê hương và du khách thập phương về xem, cỗ vũ. Dịp này, người dân Lệ Thủy ai cũng làm mâm cơm cúng Bác Hồ và Đại tướng Võ Nguyên Giáp, cúng ông bà tổ tiên.</p>
+				<p class="tour-info">Với ý nghĩa của Lễ hội nên tháng 8 năm 2019 Lễ hội đua thuyền trên sông Kiến Giang được Bộ Văn Hóa – Thể Thao – Du lịch đưa vào danh mục di sản văn hóa phi vật thể Quốc gia.</p>
+				<img src="https://image.phunuonline.com.vn/fckeditor/upload/2024/20240424/images/5-le-hoi-thu-vi-tai-phu-_981713937307.jpg" alt="f">
+				<h3>3. Thời gian diễn ra lễ hội đua thuyền</h3>
+				<p class="tour-info">Bắt đầu từ tháng 8 người dân Lệ Thủy đã tuyển đội bơi, chuẩn bị thuyền để luyện tập. Giữa tháng 8, sẽ diễn ra các trận đấu vòng loại. Lễ hội chính thức diễn ra từ ngày 31 tháng 8 đến 2 tháng 9. Trận chung kết diễn ra vào sáng 2 tháng 9, được truyền hình trực tiếp trên kênh QBTV Đài Phát thanh – Truyền hình Quảng Bình.</p>
+				<p class="tour-info">Lễ hội diễn ra trên sông Kiến Giang, đội thuyền nam sẽ bơi thuyền quãng đường dài 24km, và đội thuyền nữ bơi thuyền với chiều dài 15km.</p>
+				<h4>4. Đến lễ hội đua thuyền ở Lệ Thủy, bạn sẽ được trải nghiệm những gì?</h3>
+				<p class="tour-info">Về với Lệ Thủy trong những ngày diễn ra lễ hội đua thuyền. Bạn sẽ nhìn thấy không gian tràn ngập màu sắc lễ hội. Khắp các con đường cờ hoa ngập lối, dòng sông Kiến Giang ngày nào hiền hòa thì giờ đây dậy sóng bởi những đường đua của các đội bơi và tiếng hò reo cỗ vũ của hàng ngàn khán giả.</p>
+				<p class="tour-info">Các xã vùng ven sông Nhật Lệ đều đăng ký đội đua, mỗi năm sẽ có khoảng 30 thuyền bơi nam, và 20 thuyền bơi nữ tham gia, mỗi thuyền bơi có 24 vận động viên. Mỗi đội đua có một màu áo, màu cờ, màu băng rôn, màu mũ khác nhau, làm cho không khí lễ hội rất tưng bừng, sáng rực cả vùng quê. Đêm xuống, hai bên dòng sông Kiến Giang rực sáng đèn, ánh đèn chiếu xuống làm cho dòng sông lung linh, cảnh vật thật huyền ảo.</p>
+				<p class="tour-info">Những con thuyền rồng với họa tiết đa sắc màu cũng rất thú vị nếu bạn muốn khám phá. Để làm được thuyền, người dân sẽ lên rừng tìm gỗ quý, phơi khô và đóng thuyền bằng bí quyết riêng. Có những thôn sẽ đóng mới thuyền, mỗi thôn có vài ba chiếc, có thôn thuyền sử dụng trong vài ba năm, sau mỗi lần thi đua sẽ được thôn lau chùi, cất giữ cẩn thận. Trước khi đưa thuyền xuống đua trưởng thôn sẽ làm lễ cúng thần linh để mong thuyền đua về đích sớm nhất.</p>
+				<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWCO7SVcs_zqYOX6DYIN4QyvanrjPKdWF7Ww&s" alt="q">
+				<h3>5. Cách di chuyển đến xem lễ hội đua thuyền trên sông Kiến Giang</h3>
+				<p class="tour-info">Từ trung tâm thành phố Đồng Hới di chuyển về khoảng 50km sẽ đến thị trấn Kiến Giang huyện Lệ Thủy. Bạn có thể di chuyển bằng xe khách, hoặc đi xe máy, thuê xe dịch vụ. Thời điểm diễn ra lễ hội đua thuyền sẽ có rất đông phương tiện và người về trải nghiệm nên đường phố rất đông đúc, lời khuyên của quangbinh.travel là bạn nên đến sớm, chọn cho mình chỗ lưu trú cạnh sông Kiến Giang. Bạn có thể chọn những nhà nghỉ chất lượng tốt, sang trọng, sạch sẽ và giá hợp lý như:</p>
+				 <h3>Gợi ý nhà nghỉ tại Lệ Thủy (Lễ hội đua thuyền)</h3>
+				<ul>
+				<li><strong>Nhà nghỉ Phước Sang:</strong> Tổ Dân Phố 6, Thị trấn Kiến Giang, Huyện Lệ Thủy, Tỉnh Quảng Bình (0912377555)</li>
+				<li><strong>Nhà nghỉ Sự Hương:</strong> 68 Nguyễn Trãi, Thị Trấn Kiến Giang, Lệ Thủy, Quảng Bình (0914.214.216 - 0944.214.216)</li>
+				<li><strong>Nhà nghỉ Hằng Nga:</strong> Tổ Dân Phố 5, Thị trấn Kiến Giang, Huyện Lệ Thủy, Tỉnh Quảng Bình (0834882519)</li>
+				</ul>
+				<p class="tour-info">Quá trình trải nghiệm Lễ hội đua thuyền trên sông Kiến Giang, bạn đừng bỏ qua những món ăn ngon của người dân nơi đây như: cháo cá đồng nấu hạt sen. Cá rô đồng kho tiêu, vịt quay Lệ Thủy, cháo vịt đồng. Mua về làm quà ớt bột, hạt tiêu khô, nhút tép đồng, bánh ép.</p>
+				<p class="tour-info">Lễ hội đua thuyền truyền thống trên sông Kiến Giang, Lệ Thủy là một món ăn tinh thần không thể thiếu không chỉ của người dân Lệ Thủy mà còn của người dân Quảng Bình. Lễ hội cầu cho mưa thuận gió hòa, mừng tết Độc lập, cũng là dịp để con cháu tỏ lòng tri ân tới những bậc tiền bối đã hy sinh vì độc lập dân tộc. Từ khi lễ hội được tổ chức với quy mô cấp tỉnh, du khách về để được hòa mình vào không khí lễ hội ngày càng đông hơn, do đó huyện Lệ Thủy càng có sự chuẩn bị chu đáo để không chỉ tạo sự độc đáo trên mỗi đường đua, mà còn rất chú trọng đến vấn đề đảm bảo an ninh trật tự, huy động sự vào cuộc của người dân để phục vụ chu đáo nhu cầu ăn uống, nghỉ ngơi, đi lại của du khách.</p>
+				<p class="tour-info">Nếu bạn muốn trải nghiệm Lễ hội đua thuyền truyền thống trên sông Kiến Giang, Lệ Thủy hãy để tôi giúp bạn có được lịch trình di chuyển hợp lý để không phải chen lấn trong thời điểm đông đúc. Hẹn gặp các bạn tại Lệ Thủy vào dịp 2/9 hàng năm.
+			
+			<h2>Nhà lưu niệm Đại tướng Võ Nguyên Giáp</h2><hr>
+				<p class="tour-info">Nhà lưu niệm Đại tướng Võ Nguyên Giáp với hình ảnh mộc mạc đã trở thành địa điểm du lịch gần gũi với du khách bốn phương. Đây không chỉ là điểm đến tham quan, khám phá mà còn là nơi ghi dấu lịch sử về vị anh hùng dân tộc Việt Nam.</p>
+				<img src="https://quangbinh.gov.vn/documents/35002/5669706/k9000.jpg/66c9af28-6016-0501-0019-0e67fe2e568e?t=1729220876514" alt="i">
+				<h3> 1. Địa chỉ nhà Đại tướng Võ Nguyên Giáp tại Quảng Bình</h3>
+				<p class="tour-info">Nhà Đại tướng Võ Nguyên Giáp nằm ở làng An Xá, xã Lộc Thuỷ, huyện Lệ Thuỷ, tỉnh Quảng Bình. Ngôi nhà cách trung tâm thành phố Đồng Hới 40km về phía Nam, du khách sẽ mất khoảng 40-60 phút để di chuyển.  Đây vốn là di tích lịch sử nổi tiếng ở Quảng Bình để lại nhiều cảm xúc và ấn tượng cho mỗi du khách khi có dịp ghé thăm. </p>
+				<img src="https://statics.vinpearl.com/nha-luu-niem-dai-tuong-vo-nguyen-giap-2_1633015459.jpeg" alt="d">
+				<p class="tour-info">Đại tướng từng chia sẻ: “Quê hương, gia đình chính là nơi hun đúc ý chí, nhân cách và quyết định con đường đi của tôi”. Đó cũng chính là lý do khi qua đời người vẫn chọn về với nơi chôn rau cắt rốn. </p>
+				<p class="tour-info">Mộ Đại tướng Võ Nguyên Giáp hiện nay nằm tại Vũng Chùa Đảo Yến - nơi sở hữu cảnh sắc sơn thủy hữu tình, không khí rất yên bình và thơ mộng. Du khách đến Quảng Bình nên một lần ghé thăm vùng đất xinh đẹp này. </p>
+				<h3>2. Thăm nhà tưởng niệm Đại tướng Võ Nguyên Giáp</h3>
+				<p class="tour-info">Với cấu trúc hai tầng, tầng một của Nhà tưởng niệm có sảnh đón tiếp du khách thập phương, khu soạn lễ và hướng dẫn...; tầng hai là gian nhà gỗ truyền thống, chia thành 3 gian, với tổng diện tích sàn hơn 252m2. Nơi đây có không gian thờ cúng, vị trí hành lễ, kho, phòng dâng hương và hành lang, trong đó, ban thờ Đại tướng - Tổng Tư lệnh Võ Nguyên Giáp được đặt tại vị trí trung tâm và trang trọng. Không gian tầng hai cũng là nơi trưng bày, lưu giữ các kỷ vật, hiện vật gắn với cuộc đời Đại tướng.</p>
+				<img src="https://cdn.daibieunhandan.vn/images/fb2d4f95a0ad79bf3862326be647e4d787147937aea5270cab9cc059d6042999e77654102797b4692844095407b39cebbe1c87281a1da77b6b28b1353e88d9afd5e3e768a18617d774c29679ddc4f0ee2d4e978813514f1e17c293e424eb9fd3/z5918541288645-e29bb4afad901f9777cadddac64df89b-3819-468.jpg" alt="f">
+				<p class="tour-info">Đến nay, Nhà tưởng niệm Đại tướng Võ Nguyên Giáp đã hoàn thành cơ bản phần xây dựng và tiếp tục hoàn thiện các hạng mục khác, nhằm kịp thời gian hoàn thành trong tháng 12.2024.</p>
+				<p class="tour-info">Ngôi nhà đơn sơ với mái ngói và lá tranh lợp vẫn được trông coi và chăm chút bởi gia đình của Đại tướng Võ Nguyên Giáp, nằm cạnh Nhà tưởng niệm đang được xây dựng. Đặc biệt, tại khuôn viên của ngôi nhà cũ vẫn còn chăm sóc cây khế già, lúc niên thiếu Đại tướng Võ Nguyên Giáp thường đọc sách và vui chơi dưới gốc cây.</p>
+				<img src="https://cdn.daibieunhandan.vn/images/fb2d4f95a0ad79bf3862326be647e4d787147937aea5270cab9cc059d6042999176f35927b0ebd7695cbda71c9e10617609f7b4dba154ae288ccdc5bb758f2078da5372f2618d592386aef6e7ec82a3369621d7062b649b6b18db2d2d50a8132/z5918541299598-5e219e11ec5f19fbaa9edfb703c1f511-9968-1728.jpg" alt="x">
+			            
+            <h2>Thành cổ Đồng Hới – Di tích lịch sử giữa lòng Quảng Bình</h2><hr>
+					<p class="tour-info">Thành cổ Đồng Hới, một địa danh nổi tiếng ở Quảng Bình, gắn liền với những thăm trầm của vùng đất này. Khi đến đây, du khách sẽ được khám phá kiến trúc độc đáo để từ đó hiểu thêm về những thời kỳ lịch sử hào hùng của dân tộc.</p>
+					<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShx8VK85U7SaOWfj2D2qxXR7qpW925ii-hxw&s" alt="p">
+					<h3> Vị trí của Thành Đồng Hới</h3>
+					<img src="https://netintravel.com/wp-content/uploads/2023/06/thanh-co-dong-hoi.jpeg" alt="d">
+					<p class="tour-info">Thành Đồng Hới nằm ở trung tâm thành phố Đồng Hới, Quảng Bình, cách biển Nhật Lệ khoảng 1.500m. Trước đây, thành này thuộc xã Phú Minh và Đông Hải, huyện Phong Lộc, tỉnh Quảng Bình, nhưng hiện nay nằm trong phường Đồng Phú và Hải Đình, thành phố Đồng Hới. Đây là một điểm du lịch nổi tiếng không thể bỏ qua khi bạn đến Quảng Bình, nơi bạn có thể trực tiếp chứng kiến những di tích lịch sử đặc biệt liên quan đến dân tộc.</p>
+					<h3>Thời điểm nên du lịch Thành cổ Đồng Hới</h3>
+					<img src="https://netintravel.com/wp-content/uploads/2023/06/thanh-co-dong-hoi-3.jpg" alt="s">
+					<p class="tour-info">Du lịch Thành cổ Đồng Hới, bạn có thể đi vào mọi thời điểm trong năm, nhưng nhiều người lựa chọn đi từ tháng 3 cho đến tháng 5, bởi lúc này thời tiết mát mẻ nhất, không khí cũng thoáng mát, bạn dễ dàng tham quan cũng như trải nghiệm các hoạt động tại thành cổ này.</p>
+					<p class="tour-info">Nếu như đi vào các tháng từ 6 cho đến tháng 8 thì trời rất nóng, cái nắng của Quảng Bình có thể khiến bạn mệt mỏi đấy. Còn đi vào các tháng cuối năm thì ở miền Trung thường có mưa to và mưa rất nhiều, điều này cũng gây khó khăn cho bạn trải nghiệm tại khu du lịch thành cổ Đồng Hới thú vị này.</p>
+					<h3>Cách di chuyển đến thành cổ Đồng Hới</h3>
+					<p class="tour-info">Từ nhà thờ Tam Tòa ở trung tâm thành phố Đồng Hới, du khách đi qua đường Nguyễn Du, sau đó đến đường Quách Xuân Kỳ. Chỉ mất khoảng 10 phút đi bộ là bạn có thể khám phá những di tích lịch sử tại thành Đồng Hới. Ngoài ra, du khách cũng có thể di chuyển đến các địa điểm khác trong thành phố bằng xe điện, taxi, xe ôm, thậm chí đi bộ. Thành cổ Đồng Hới cũng gần với Quảng Bình Quan, một điểm du lịch nổi tiếng khác.</p>
+					<h3>Giá vé tham quan thành cổ Đồng Hới</h3>
+					<img src="https://netintravel.com/wp-content/uploads/2023/06/thanh-co-dong-hoi-1-1536x1536.jpeg" alt="q">
+					<p class="tour-info">Thành cổ Đồng Hới hiện nay có chính sách miễn phí vé tham quan cho du khách. Điều này có nghĩa là bạn có thể tham quan thành cổ mà không phải mất bất kỳ khoản phí nào. Tuy nhiên, lượng du khách khá đông đúc do vậy bạn nên chủ động sắp xếp lịch trình để có chuyến tham qua thoải mái nhất nhé.</p>
+					<h3> Thăm quan các điểm du lịch khác khi đến thành cổ Đồng Hới</h3>
+					<ul>
+					<li><strong>Cửa Đông của thành Đồng Hới:</strong> Cửa Đông nằm trên đường Lê Duẩn, gần sông và cửa biển Nhật Lệ. Đây là một phần quan trọng còn lại của thành cổ Quảng Bình. Trước đó, 3 cổng và 2 cây cầu ở phía Nam và phía Bắc đã bị quân đội Mỹ phá hủy. Từ năm 2002 đến 2009, tỉnh Quảng Bình đã khôi phục và tôn tạo Cửa Đông để bảo tồn những di tích lịch sử, đáp ứng nhu cầu tham quan và tìm hiểu về lịch sử của du khách.</li>
+					<li><strong>Quảng Bình Quan:</strong>Quảng Bình Quan nằm trong hệ thống Lũy Thầy ở trung tâm phường Đông Hải, xây dựng từ năm 1631. Đây là hệ thống tường thành cổ giữ vững Hoàng thành của nhà Nguyễn, có vị trí chiến lược trong việc bảo vệ đường chính Bắc – Nam và con đường thủy đến cửa sông Nhật Lệ. Trước đây, Quảng Bình Quan đã bị phá hủy gần như hoàn toàn, nhưng hiện nay đã được phục dựng lại.</li>
+					</ul>
+			 	<p class="tour-info">Những điểm du lịch này sẽ mang đến cho du khách một trải nghiệm thú vị với lịch sử và vẻ đẹp của thành cổ Đồng Hới.</p>
+			
+		</div>
+	</div>	
+    <!-- Popup for Dân tộc miền núi -->
+    <input type="checkbox" id="popup-ethnic-checkbox">
+    <div class="popup" id="popup-ethnic">
+        <div class="popup-content">
+            <label for="popup-ethnic-checkbox" class="close-btn">✖</label>
+            <h2>Dân tộc miền núi Quảng Bình</h2>
+            <p>Quảng Bình là nơi sinh sống của các nhóm dân tộc thiểu số (DTTS) như Bru - Vân Kiều (Vân Kiều, Trì, Khùa, Ma Coong) và Chứt (Sách, Mày, Rục, Arem, Mã Liềng) với hơn 28.000 người, chiếm 2,6% dân số tỉnh. Các tộc người này sống chủ yếu ở Minh Hóa, Tuyên Hóa, Bố Trạch, Quảng Ninh và Lệ Thủy, mang văn hóa phong phú và độc đáo.</p>
+            <img src="https://quangbinhtourism.vn/wp-content/uploads/2024/02/ban-rum-ho-10-1536x1024.jpg" alt="Đồng bào dân tộc Quảng Bình">
+            <p><span class="highlight-green">Văn hóa:</span> Các lễ hội như đập trống Ma Coong, trỉa lúa Bru - Vân Kiều, hò thuốc cá được công nhận Di sản văn hóa phi vật thể quốc gia, thể hiện bản sắc riêng.</p>
+            <img src="https://quangbinhtourism.vn/wp-content/uploads/2024/02/Le-hoi-tria-lua-bru-van-kieu-2.jpg" alt="Lễ hội dân tộc">
+            <p><span class="highlight-green">Du lịch:</span> Các trải nghiệm như khám phá hang Chà Lòi (Ngân Thủy), văn hóa Rục (Thượng Hóa), thiên nhiên Hóa Sơn - hang Rục Mòn, hay tuyến đường Hồ Chí Minh thu hút du khách.</p>
+            <img src="https://quangbinhtourism.vn/wp-content/uploads/2024/02/suoi-cha-rao-cha-cung-2.jpg" alt="Phong cảnh thiên nhiên">
+            <p>Tỉnh chú trọng bảo tồn văn hóa DTTS gắn với phát triển du lịch bền vững, cải thiện đời sống và giảm nghèo cho đồng bào.</p>
+        </div>
+    </div>
+
+    <!-- Popup for Ẩm thực -->
+    <input type="checkbox" id="popup-food-checkbox">
+    <div class="popup" id="popup-food">
+        <div class="popup-content">
+            <label for="popup-food-checkbox" class="close-btn">✖</label>
+            <h2>Ẩm thực Quảng Bình</h2>
+            <p>Quảng Bình luôn thu khách du khách bởi vẻ đẹp mê hoặc của các <span class="highlight-blue">hệ thống hang động </span>, thiên nhiên mang đậm nét hoang sơ nhưng vô cùng hùng vĩ, những bãi cát trắng trải dài bên bờ biển thơ mộng. Song song với du lịch,<span class="highlight-blue"> ẩm thực mộc mạc </span>mang những nét đặc trưng riêng nơi đây cũng là điểm <span class="highlight-blue">cực kỳ hấp dẫn</span> đối với các du khách cũng như những tín đồ ăn uống.</p>
+ <p>Vậy, hãy cùng chúng tôi điểm qua những món ăn ngon nhất định phải thử khi đến Quảng Bình nhé!</p>
+	<h2>1. 🥟 Bánh Lọc</h2>
+            <p class="description">
+            Bánh lọc là món đặc sản ở xứ Huế, nhưng khi đến Quảng Bình được chế biến theo cách khác biệt riêng. 
+            Thưởng thức hương vị thơm ngon, nóng hổi, dai mềm với phần nhân đậm vị, nhiều tôm, thịt, mộc nhĩ và măng 
+            của món bánh này sẽ mang đến cho thực khách hương vị khó quên. Thậm chí, rất nhiều người đã mua món bánh này 
+            như một món quà khi trở về.
+        </p>
+        <p class="description">
+            Bạn có thể chọn bánh lọc lá, bánh lọc trần hay bánh lọc rán, các món đều rất ngon theo cách thưởng thức và chế biến riêng.
+        </p>
+
+            <img src="https://oxalisadventure.com/uploads/2021/01/banhloc__637457219499762697.jpg" alt="Bánh lọc">
+            <h3><span class="highlight-green">📍 Một số gợi ý quán ngon dành cho bạn:</h3></span> 
+        <ul>
+		  <li><strong> Quán mệ Xuân</strong>: Đường Lê Thành Đồng, TP Đồng Hới. </li>
+		  <li><strong> Quán Sơn Lý</strong> - Đ/c: số 115 Lý Thường Kiệt, TP Đồng Hới</li>
+		  <li><strong> Quán dì Thái</strong> - Đ/c: 13 Đồng Hải, TP Đồng Hới</li>
+		  <li><strong> Quán dì Thủy</strong> - Đ/c: 11 Thanh Niên, TP Đồng Hới</li>
+		</ul>
+		       <h2>2.🍜 Cháo Canh</h2>
+        <p class="description">
+            Cháo canh là một trong những món ăn quen thuộc mang hương vị quê hương đối với mỗi người dân Quảng Bình. 
+            Những nguyên liệu không thể thiếu trong mỗi tô cháo gồm sợi mì/gạo, thịt nạc và cá lóc đặc biệt ăn kèm với ram (nem, chả giò) 
+            – tên gọi đậm chất mộc mạc của người dân nơi đây. Hương vị ngọt của nước dùng hòa quyện cùng những sợi mì và thớ thịt chắc 
+            chắn sẽ làm bạn xiêu lòng.
+        </p>
+        <p class="description">
+            Ngoài ra, món ăn này còn được biến tấu theo nhiều hình thức khác như có kết hợp với lòng, gan, đồi heo hay với thịt cua. 
+            Tất cả đều mang đến những hương vị đậm đà mang bản sắc nơi đây.
+        </p>
+            <img src="https://oxalisadventure.com/uploads/2021/01/chaocanh__637457219490876827.jpg">
+            <h3>📍 Một số gợi ý quán ngon dành cho bạn:</h3>
+            <ul>
+                <li><strong>Cháo canh Gia Bảo</strong> - Đ/c: 8 Lý Thường Kiệt, TP Đồng Hới</li>
+                <li><strong>Quán cháo canh cua rời</strong>: 02 Trần Bang Cẩn, Cạnh cổng trường tiểu học Chu Văn An</li>
+                <li><strong>Quán cháo canh cua rời Đô Nhuận</strong>, phía sau bến xe Đồng Hới</li>
+                <li><strong>Quán cháo sắt cá lóc (cháo canh gạo lứt)</strong> - Đ/c: gần ngã ba Hoàng Diệu và Hà Huy Tập</li>
+            </ul>
+
+           <h2>3.🔥 Gà Nướng Ăn Cùng Muối Cheo</h2>
+        <p class="description">
+            Luôn làm ấn tượng và hấp dẫn du khách khi đến Quảng Bình không thể không kể đến món mẹt gà nướng ăn kèm với xôi. 
+            Những thớ thịt gà với màu vàng ươm, da giòn, mùi thơm nức lòng với những gia vị riêng biệt của miền Trung. 
+            Đặc biệt, một thứ gia vị lạ miệng gây tò mò và hấp dẫn du khách bởi hương vị cũng như tên gọi đó là **muối cheo** – 
+            một loại muối của Phong Nha dùng để ăn kèm với gà nướng, thịt nướng.
+        </p>
+        <p class="description">
+            Đây cũng là thức chấm đặc biệt xuất hiện trong mọi bữa ăn trong tour Oxalis. Sự kết hợp hoàn hảo này chắc chắn sẽ làm 
+            kích thích vị giác của bạn.
+        </p>
+            <img src="https://oxalisadventure.com/uploads/2021/01/ganuong__637457219481667841.jpg">
+                 <h3>📍 Một số gợi ý quán ngon dành cho bạn:</h3>
+            <ul>
+                <li><strong>East Hill Phong Nha</strong> - Đ/c: Bố Trạch, Quảng Bình</li>
+                <li><strong>Chày Lập Farmstay</strong> - làng Chày, Bố Trạch, Quảng Bình</li>
+                <li><strong>Quán Lên Con</strong> - Đ/c: thị trấn Phong Nha, Bố Trạch, Quảng Bình</li>
+                <li><strong>Gà mẹt Ở Ó Lake Silence</strong> - Đ/c: Khương Hà, Bố Trạch, Quảng Bình</li>
+            </ul>
+
+            		<h2>4.🐟 Cá Trắm Sông Son</h2>
+        <p class="description">
+            Sông Son – một dòng sông với màu xanh ngọc tuyệt đẹp mà chắc hẳn những du khách nào đã từng đến Phong Nha đều ấn tượng. 
+            Nơi đây có một làng nghề nuôi cá lồng lâu năm của người dân Phong Nha, đặc biệt nổi tiếng với giống cá trắm thơm ngon, 
+            mang hương vị đặc biệt của vùng đất này. Nếu có dịp ghé thăm, đừng bỏ lỡ những món cá trắm được chế biến theo nhiều cách hấp dẫn nhé!
+        </p>
+            <img src="https://oxalisadventure.com/uploads/2021/01/catram__637457219468797148.jpg" alt="Cá trắm sông Son">
+            <h3>📍 Một số gợi ý quán ngon dành cho bạn:</h3>
+            <ul>
+                <li><strong>Nhà hàng tại Chày Lập Farmstay</strong> - làng Chày, Bố Trạch, Quảng Bình</li>
+                <li><strong>Nhà Hàng Thu Huế</strong> - thị trấn Phong Nha, Bố Trạch, Quảng Bình</li>
+                <li><strong>Nhà Hàng Thu Hà</strong> - thị trấn Phong Nha, Bố Trạch, Quảng Bình</li>
+                <li><strong>Nhà Hàng Vững Huế</strong> - thị trấn Phong Nha, Bố Trạch, Quảng Bình</li>
+            </ul>
+
+            <h2>5.🥞 Bánh Khoái</h2>
+        <p class="description">
+            Với cái tên nghe rất lạ tai nhưng đây là món ăn mà khi nhắc đến Quảng Bình, các tín đồ yêu thích các món bánh chiên 
+            sẽ nghĩ ngay tới. Bánh khoái có nhiều nét tương đồng với bánh xèo nhưng hương vị lại khác biệt. Vỏ bánh được chế biến khá cầu kỳ, 
+            giòn tan, bên trong nhân có thịt nạc băm nhỏ, tôm và giá đỗ. Khi ăn sẽ ăn kèm với bánh cuốn, rau sống và nước lèo – một phần quan trọng 
+            tạo nên hương vị đậm đà riêng.
+        </p>
+            <img src="https://oxalisadventure.com/uploads/2021/01/banhkhoai__637457219444352630.jpg" alt="Bánh khoái Quảng Bình">
+                   <h3>📍 Một số gợi ý quán ngon dành cho bạn:</h3>
+            <ul>
+                <li><strong>Quán bánh khoái Tứ Quý</strong> - 17 Cô Tám, TP Đồng Hới</li>
+                <li><strong>Quán Ly Ly</strong> - Số 11A Cô Tám, TP Đồng Hới</li>
+            </ul>
+        </div>
+    </div>
+
+
+    <!-- Deals -->
+    <div class="deals-container">
+        <div class="card">
+            <div class="deal">DEAL GIÁ SỐC</div>
+            <img src="https://nld.mediacdn.vn/291774122806476800/2024/11/18/dong-phong-nha-ke-bang-dep-den-choang-ngop-17319168370561406931222.jpg" alt="Phong Nha-Kẻ Bàng">
+            <div class="card-content">
+                <p class="location">📍 Bố Trạch</p>
+                <h3>Phong Nha-Kẻ Bàng</h3>
+                <p class="info">📅 12-06-2018 / 4 Ngày 3 Đêm</p>
+                <p class="price">1.800.000đ <span class="old-price">2.200.000đ</span></p>
+                <a href="file:///C:/Users/ASUS/OneDrive/Documents/phongnhakebang.html" class="button">Xem chi tiết</a>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://suckhoedoisong.qltns.mediacdn.vn/324455921873985536/2022/10/5/hang-son-doong-quang-binh-hang-dong-lon-nhat-the-gioi-hinh4-848x530-16649303939522043678324.jpg" alt="Hang Sơn Đoòng">
+            <div class="card-content">
+                <p class="location">📍 Bố Trạch</p>
+                <h3>Hang Sơn Đoòng</h3>
+                <p class="info">📅 19-02-2019 /1 ngày 1 đêm</p>
+                <p class="price">50.000.000đ</p>
+                <a href="file:///C:/Users/ASUS/OneDrive/Documents/hangsondoong.html" class="button">Xem chi tiết</a>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://phongnhatourist.com/wp-content/uploads/2023/05/Thung-Lung-Hava-04-1.jpg" alt="Đồng Hới">
+            <div class="card-content">
+                <p class="location">📍 Đồng Hới</p>
+                <h3>Động Thiên Đường-Thung Lũng Ngọc Bích Hava</h3>
+                <p class="info">📅 19-02-2019 / 4 Ngày 3 Đêm</p>
+                <p class="price">1.300.000đ</p>
+                <a href="file:///C:/Users/ASUS/OneDrive/Documents/HAVA.html" class="button">Xem chi tiết</a>
+            </div>
+        </div>
+        <div class="card">
+            <div class="deal">DEAL GIÁ SỐC</div>
+            <img src="https://media.thuonghieucongluan.vn/uploads/2023/08/15/bang-qb-1692070237.jpg" alt="Suối Bang">
+            <div class="card-content">
+                <p class="location">📍 Lệ Thủy</p>
+                <h3>Suối Bang Onsen</h3>
+                <p class="info">📅 Thứ 5 hàng tuần / 3 Ngày 2 Đêm</p>
+                <p class="price">6.500.000đ <span class="old-price">6.800.000đ</span></p>
+                <a href="file:///C:/Users/ASUS/OneDrive/Documents/osen.html" class="button">Xem chi tiết</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Phần biểu mẫu liên hệ -->
+    <header class="hero">
+        <div class="overlay">
+            <h1>Liên Hệ</h1>
+            <p>Trang chủ / Liên hệ</p>
+        </div>
+    </header>
+    <div class="hamburger" onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i> <!-- Dấu 3 gạch -->
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar-container">
+        <div class="sidebar">
+            <div class="user">
+                <p>Du lịch Quảng Bình</p>
+            </div>
+           <a href="javascript:void(0);" onclick="showMembers()"><i class="fas fa-user-friends"></i> Chọn hướng dẫn viên</a>
+
+           <!-- Danh sách thành viên -->
+           <div class="members-list" id="membersList">
+                <button onclick="toggleMemberInfo('Lê Thị Khánh Nguyên', this)">Lê Thị Khánh Nguyên</button>
+                <button onclick="toggleMemberInfo('Hoàng Hà Diệu Hân', this)">Hoàng Hà Diệu Hân</button>
+                <button onclick="toggleMemberInfo('Nguyễn Thị Diệu Hà', this)">Nguyễn Thị Diệu Hà</button>
+                <button onclick="toggleMemberInfo('Phan Thị Hồng Thắm', this)">Phan Thị Hồng Thắm</button>
+                <button onclick="toggleMemberInfo('Phan Thị Phương Thảo', this)">Phan Thị Phương Thảo</button>
+                <button onclick="toggleMemberInfo('Trương Thị Hạ Vy', this)">Trương Thị Hạ Vy</button>
+                <button onclick="toggleMemberInfo('Trần Thị Thùy Linh', this)">Trần Thị Thùy Linh</button>
+                <button onclick="toggleMemberInfo('Nguyễn Thảo Ngọc', this)">Nguyễn Thảo Ngọc</button>
+                <button onclick="toggleMemberInfo('Võ Phương Nhung', this)">Võ Phương Nhung</button>
+                <button onclick="toggleMemberInfo('Võ Ngọc Hoàng Anh', this)">Võ Ngọc Hoàng Anh</button>
+            </div>
+
+        </div>
+    </div>
+
+<script>
+        // Hàm toggle sidebar
+        function toggleSidebar() {
+            let sidebar = document.querySelector('.sidebar');
+            sidebar.classList.toggle('open'); // Thêm/loại bỏ lớp 'open' để thay đổi trạng thái của sidebar
+        }
+
+        // Hiển thị danh sách thành viên khi nhấn vào "Chọn hướng dẫn viên"
+        function showMembers() {
+            let membersList = document.getElementById('membersList');
+            membersList.style.display = membersList.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Hàm toggle hiển thị thông tin thành viên
+        function toggleMemberInfo(memberName, button) {
+            let existingInfo = button.nextElementSibling; // Kiểm tra phần tử thông tin đã tồn tại chưa
+
+            if (existingInfo && existingInfo.classList.contains("member-info")) {
+                // Nếu thông tin đã được hiển thị, ẩn nó đi
+                existingInfo.style.display = existingInfo.style.display === 'none' ? 'block' : 'none';
+            } else {
+                // Tạo phần tử thông tin mới nếu chưa có
+                let memberDetails = "";
+            if (memberName === 'Lê Thị Khánh Nguyên') {
+                memberDetails = "Tên: Lê Thị Khánh Nguyên<br>Tuổi: 29<br>Sở thích: Du lịch, văn hóa.";
+            } else if (memberName === 'Hoàng Hà Diệu Hân') {
+                memberDetails = "Tên: Hoàng Hà Diệu Hân<br>Tuổi: 26<br>Sở thích: Nghệ thuật, du lịch.";
+            } else if (memberName === 'Nguyễn Thị Diệu Hà') {
+                memberDetails = "Tên: Nguyễn Thị Diệu Hà<br>Tuổi: 28<br>Sở thích: Chụp ảnh, thể thao.";
+            } else if (memberName === 'Phan Thị Hồng Thắm') {
+                memberDetails = "Tên: Phan Thị Hồng Thắm<br>Tuổi: 27<br>Sở thích: Sách, nghệ thuật.";
+            } else if (memberName === 'Phan Thị Phương Thảo') {
+                memberDetails = "Tên: Phan Thị Phương Thảo<br>Tuổi: 30<br>Sở thích: Du lịch, hội họa.";
+            } else if (memberName === 'Trương Thị Hạ Vy') {
+                memberDetails = "Tên: Trương Thị Hạ Vy<br>Tuổi: 31<br>Sở thích: Lịch sử, du lịch.";
+            } else if (memberName === 'Trần Thị Thùy Linh') {
+                memberDetails = "Tên: Trần Thị Thùy Linh<br>Tuổi: 29<br>Sở thích: Thực phẩm, nghệ thuật.";
+            } else if (memberName === 'Nguyễn Thảo Ngọc') {
+                memberDetails = "Tên: Nguyễn Thảo Ngọc<br>Tuổi: 25<br>Sở thích: Du lịch, chụp ảnh.";
+            } else if (memberName === 'Võ Phương Nhung') {
+                memberDetails = "Tên: Võ Phương Nhung<br>Tuổi: 27<br>Sở thích: Âm nhạc, sách.";
+            } else if (memberName === 'Võ Ngọc Hoàng Anh') {
+                memberDetails = "Tên: Võ Ngọc Hoàng Anh<br>Tuổi: 32<br>Sở thích: Thể thao, du lịch.";
+            }
+
+                // Tạo phần tử thông tin thành viên
+                let infoDiv = document.createElement("div");
+                infoDiv.classList.add("member-info");
+                infoDiv.innerHTML = memberDetails;
+
+                // Chèn thông tin thành viên vào ngay dưới nút bấm
+                button.parentElement.insertBefore(infoDiv, button.nextElementSibling);
+            }
+        }
+</script>
+
+    <section class="contact-section">
+        <button class="contact-btn">LIÊN HỆ NGAY</button>
+        <h2>Liên hệ ngay nếu có thắc mắc</h2>
+        <div class="contact-info">
+            <div class="info-box">
+                <img src="https://cdn-icons-png.flaticon.com/512/684/684908.png" alt="Địa chỉ">
+                <h3>Địa chỉ</h3>
+                <p>1073/23 Cách Mạng Tháng 8, P.7, Q.Tân Bình, TPHCM</p>
+            </div>
+            <div class="info-box">
+                <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="Email">
+                <h3>Email</h3>
+                <p>info@thenmona.global</p>
+            </div>
+            <div class="info-box">
+                <img src="https://cdn-icons-png.flaticon.com/512/724/724664.png" alt="Hotline">
+                <h3>Hotline</h3>
+                <p>(+84) 0313-728-397</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="experience">
+        <button class="experience-btn">LIÊN HỆ VỚI CHÚNG TÔI</button>
+        <h2>Trải nghiệm đáng nhớ</h2>
+        <p>Hãy cùng chúng tôi khám phá thế giới và tạo ra những kỷ niệm đáng nhớ trong một chuyến đi tuyệt vời.</p>
+        <form class="contact-form">
+            <input type="text" placeholder="Họ tên">
+            <input type="email" placeholder="Email">
+            <input type="text" placeholder="Số điện thoại">
+            <input type="text" placeholder="Chủ đề">
+            <textarea placeholder="Nội dung"></textarea>
+            <button type="submit">Gửi</button>
+        </form>
+    </section>
+
+</body>
+</html>
+      
+
+
